@@ -1,41 +1,49 @@
 
-#define DELAY 100000
-#define CLRSCR() printf("\e[2J\e[H")
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-enum halfcat {
-	orange_front,
-	orange_back,
-	grey_front,
-	grey_back,
-	brown_front,
-	brown_back,
-	black_front,
-	black_back,
+#define aA_COLOR		208
+#define aB_COLOR		208
+#define bA_COLOR		249
+#define bB_COLOR		249
+#define cA_COLOR		94
+#define cB_COLOR		94
+#define dA_COLOR		232
+#define dB_COLOR		232
+#define center_COLOR	196
+#define border_COLOR	2
+
+enum halfobj {
+	aA,
+	aB,
+	bA,
+	bB,
+	cA,
+	cB,
+	dA,
+	dB,
 };
 
 struct piece {
 	char id;
-	enum halfcat top;
-	enum halfcat bottom;
-	enum halfcat left;
-	enum halfcat right;
+	enum halfobj top;
+	enum halfobj bottom;
+	enum halfobj left;
+	enum halfobj right;
 };
 
 struct piece pieces[9] = {
-	{'A', grey_back, orange_front, brown_back, black_front},
-	{'B', orange_front, grey_back, grey_front, brown_front},
-	{'C', grey_front, orange_front, black_back, black_back},
-	{'D', black_back, grey_back, brown_front, orange_front},
-	{'E', black_front, orange_front, grey_back, brown_front},
-	{'F', grey_front, black_front, brown_back, orange_back},
-	{'G', black_back, grey_front, orange_front, brown_front},
-	{'H', brown_back, brown_back, orange_back, black_front},
-	{'I', brown_back, orange_back, grey_back, black_front},
+	{'A', bB, aA, cB, dA},
+	{'B', aA, bB, bA, cA},
+	{'C', bA, aA, dB, dB},
+	{'D', dB, bB, cA, aA},
+	{'E', dA, aA, bB, cA},
+	{'F', bA, dA, cB, aB},
+	{'G', dB, bA, aA, cA},
+	{'H', cB, cB, aB, dA},
+	{'I', cB, aB, bB, dA},
 };
 
 int solutions = 0;
@@ -74,18 +82,18 @@ struct piece rotate(struct piece p, int amount) {
 
 }
 
-int matches(enum halfcat a, enum halfcat b) {
+int matches(enum halfobj a, enum halfobj b) {
 
-	if ((a == orange_front && b == orange_back) || (a == orange_back && b == orange_front))
+	if ((a == aA && b == aB) || (a == aB && b == aA))
 		return 1;
 
-	if ((a == grey_front && b == grey_back) || (a == grey_back && b == grey_front))
+	if ((a == bA && b == bB) || (a == bB && b == bA))
 		return 1;
 
-	if ((a == brown_front && b == brown_back) || (a == brown_back && b == brown_front))
+	if ((a == cA && b == cB) || (a == cB && b == cA))
 		return 1;
 
-	if ((a == black_front && b == black_back) || (a == black_back && b == black_front))
+	if ((a == dA && b == dB) || (a == dB && b == dA))
 		return 1;
 
 	return 0;
@@ -174,21 +182,20 @@ int valid(struct piece *current, int depth) {
 
 }
 
-void print_with_color(enum halfcat c) {
+void print_with_color(enum halfobj c) {
 
 	switch(c) {
-		case orange_front:	printf("\e[48;5;208mF\e[0m"); break;
-		case orange_back:	printf("\e[48;5;208mB\e[0m"); break;
-		case grey_front:	printf("\e[48;5;249mF\e[0m"); break;
-		case grey_back:		printf("\e[48;5;249mB\e[0m"); break;
-		case brown_front:	printf("\e[48;5;94mF\e[0m"); break;
-		case brown_back:	printf("\e[48;5;94mB\e[0m"); break;
-		case black_front:	printf("\e[48;5;232mF\e[0m"); break;
-		case black_back:	printf("\e[48;5;232mB\e[0m"); break;
-		case 'A' ... 'I':	printf("\e[48;5;196m%c\e[0m", c); break;
-		case 'Y':			printf("\e[48;5;2m \e[0m"); break;
-//		case 'Z':			printf("\e[48;5;231m \e[0m"); break;
-		case 'Z':			printf("\e[0m "); break;
+		case aA:			printf("\e[48;5;%dmA\e[0m", aA_COLOR); break;
+		case aB:			printf("\e[48;5;%dmB\e[0m", aB_COLOR); break;
+		case bA:			printf("\e[48;5;%dmA\e[0m", bA_COLOR); break;
+		case bB:			printf("\e[48;5;%dmB\e[0m", bB_COLOR); break;
+		case cA:			printf("\e[48;5;%dmA\e[0m", cA_COLOR); break;
+		case cB:			printf("\e[48;5;%dmB\e[0m", cB_COLOR); break;
+		case dA:			printf("\e[48;5;%dmA\e[0m", dA_COLOR); break;
+		case dB:			printf("\e[48;5;%dmB\e[0m", dB_COLOR); break;
+		case 'A' ... 'I':	printf("\e[48;5;%dm%c\e[0m", center_COLOR, c); break;
+		case 'Z':			printf("\e[48;5;%dm \e[0m", border_COLOR); break;
+		default:			printf("\e[0m "); break;
 	}
 
 }
@@ -200,12 +207,12 @@ void print_board(struct piece *current, int depth) {
 
 	int offsets[9] = {0, 4, 8, 52, 56, 60, 104, 108, 112};
 
-	memset(buffer, 'Z', 13*13*sizeof(char));
+	memset(buffer, '\xff', 13*13*sizeof(char));
 
 	for (i=0; i<13; i++) {
 		for (j=0; j<13; j++) {
 			if (i % 4 == 0 || j % 4 == 0) {
-				buffer[(i*13)+j] = 'Y';
+				buffer[(i*13)+j] = 'Z';
 			}
 		}
 	}
@@ -224,7 +231,7 @@ void print_board(struct piece *current, int depth) {
 	}
 
 	for (i=0; i<13*13; i++) {
-		print_with_color((enum halfcat)buffer[i]);
+		print_with_color((enum halfobj)buffer[i]);
 		if(i%13 == 12)
 			printf("\n");
 	}
