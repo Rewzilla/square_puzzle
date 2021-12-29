@@ -4,47 +4,42 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define aA_COLOR		208
-#define aB_COLOR		208
-#define bA_COLOR		249
-#define bB_COLOR		249
-#define cA_COLOR		94
-#define cB_COLOR		94
-#define dA_COLOR		232
-#define dB_COLOR		232
-#define center_COLOR	196
-#define border_COLOR	2
-
-enum halfobj {
-	aA,
-	aB,
-	bA,
-	bB,
-	cA,
-	cB,
-	dA,
-	dB,
-};
+enum halfobj {aA, aB, bA, bB, cA, cB, dA, dB};
 
 struct piece {
 	char id;
-	enum halfobj top;
 	enum halfobj bottom;
 	enum halfobj left;
+	enum halfobj top;
 	enum halfobj right;
 };
 
+// CONFIG //
+
+#define aA_COLOR		19
+#define aB_COLOR		19
+#define bA_COLOR		220
+#define bB_COLOR		220
+#define cA_COLOR		174
+#define cB_COLOR		174
+#define dA_COLOR		94
+#define dB_COLOR		94
+#define center_COLOR	196
+#define border_COLOR	2
+
 struct piece pieces[9] = {
-	{'A', bB, aA, cB, dA},
-	{'B', aA, bB, bA, cA},
-	{'C', bA, aA, dB, dB},
-	{'D', dB, bB, cA, aA},
-	{'E', dA, aA, bB, cA},
-	{'F', bA, dA, cB, aB},
-	{'G', dB, bA, aA, cA},
-	{'H', cB, cB, aB, dA},
-	{'I', cB, aB, bB, dA},
+	{'A', aA, bA, cA, dA},
+	{'B', aA, dB, cA, bA},
+	{'C', aA, cB, bB, dB},
+	{'D', aB, bA, cB, dA},
+	{'E', aB, dA, cB, bB},
+	{'F', aA, bA, cA, dB},
+	{'G', aA, cB, bA, cA},
+	{'H', aB, cA, dA, dB},
+	{'I', aA, dA, bA, bB},
 };
+
+// END CONFIG //
 
 int solutions = 0;
 
