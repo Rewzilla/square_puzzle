@@ -104,70 +104,34 @@ int valid(struct piece *current, int depth) {
 			return 1;
 		}
 	} else if (depth == 3) {
-		if (matches(current[0].right, current[1].left)
-		&& matches(current[1].right, current[2].left)) {
+		if (matches(current[1].right, current[2].left)) {
 			return 1;
 		}
 	} else if (depth == 4) {
-		if (matches(current[0].right, current[1].left)
-		&& matches(current[1].right, current[2].left)
-		&& matches(current[0].bottom, current[3].top)) {
+		if (matches(current[0].bottom, current[3].top)) {
 			return 1;
 		}
 	} else if (depth == 5) {
-		if (matches(current[0].right, current[1].left)
-		&& matches(current[1].right, current[2].left)
-		&& matches(current[0].bottom, current[3].top)
-		&& matches(current[3].right, current[4].left)
+		if (matches(current[3].right, current[4].left)
 		&& matches(current[4].top, current[1].bottom)) {
 			return 1;
 		}
 	} else if (depth == 6) {
-		if (matches(current[0].right, current[1].left)
-		&& matches(current[1].right, current[2].left)
-		&& matches(current[0].bottom, current[3].top)
-		&& matches(current[3].right, current[4].left)
-		&& matches(current[4].top, current[1].bottom)
-		&& matches(current[4].right, current[5].left)
+		if (matches(current[4].right, current[5].left)
 		&& matches(current[5].top, current[2].bottom)) {
 			return 1;
 		}
 	} else if (depth == 7) {
-		if (matches(current[0].right, current[1].left)
-		&& matches(current[1].right, current[2].left)
-		&& matches(current[0].bottom, current[3].top)
-		&& matches(current[3].right, current[4].left)
-		&& matches(current[4].top, current[1].bottom)
-		&& matches(current[4].right, current[5].left)
-		&& matches(current[5].top, current[2].bottom)
-		&& matches(current[6].top, current[3].bottom)) {
+		if (matches(current[6].top, current[3].bottom)) {
 			return 1;
 		}
 	} else if (depth == 8) {
-		if (matches(current[0].right, current[1].left)
-		&& matches(current[1].right, current[2].left)
-		&& matches(current[0].bottom, current[3].top)
-		&& matches(current[3].right, current[4].left)
-		&& matches(current[4].top, current[1].bottom)
-		&& matches(current[4].right, current[5].left)
-		&& matches(current[5].top, current[2].bottom)
-		&& matches(current[6].top, current[3].bottom)
-		&& matches(current[6].right, current[7].left)
+		if (matches(current[6].right, current[7].left)
 		&& matches(current[7].top, current[4].bottom)) {
 			return 1;
 		}
 	} else if (depth == 9) {
-		if (matches(current[0].right, current[1].left)
-		&& matches(current[1].right, current[2].left)
-		&& matches(current[0].bottom, current[3].top)
-		&& matches(current[3].right, current[4].left)
-		&& matches(current[4].top, current[1].bottom)
-		&& matches(current[4].right, current[5].left)
-		&& matches(current[5].top, current[2].bottom)
-		&& matches(current[6].top, current[3].bottom)
-		&& matches(current[6].right, current[7].left)
-		&& matches(current[7].top, current[4].bottom)
-		&& matches(current[7].right, current[8].left)
+		if (matches(current[7].right, current[8].left)
 		&& matches(current[5].bottom, current[8].top)) {
 			return 1;
 		}
