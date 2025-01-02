@@ -16,27 +16,32 @@ struct piece {
 
 // CONFIG //
 
-#define aA_COLOR		19
-#define aB_COLOR		19
-#define bA_COLOR		220
-#define bB_COLOR		220
-#define cA_COLOR		174
-#define cB_COLOR		174
-#define dA_COLOR		94
-#define dB_COLOR		94
-#define center_COLOR	196
+// red
+#define aA_COLOR		160
+#define aB_COLOR		160
+// blue
+#define bA_COLOR		32
+#define bB_COLOR		32
+// orange
+#define cA_COLOR		208
+#define cB_COLOR		208
+//purple
+#define dA_COLOR		129
+#define dB_COLOR		129
+
+#define center_COLOR	250
 #define border_COLOR	2
 
 struct piece pieces[9] = {
-	{'A', aA, bA, cA, dA},
-	{'B', aA, dB, cA, bA},
-	{'C', aA, cB, bB, dB},
-	{'D', aB, bA, cB, dA},
-	{'E', aB, dA, cB, bB},
-	{'F', aA, bA, cA, dB},
-	{'G', aA, cB, bA, cA},
-	{'H', aB, cA, dA, dB},
-	{'I', aA, dA, bA, bB},
+	{'A', cB, bB, aB, bA},
+	{'B', dA, cA, aB, bB},
+	{'C', bA, dA, dB, cA},
+	{'D', bB, aA, cA, dA},
+	{'E', cB, dA, aB, aA},
+	{'F', dB, cB, bB, aA},
+	{'G', bA, aB, cB, dB},
+	{'H', cB, aB, bA, dB},
+	{'I', dA, cB, aB, bA},
 };
 
 // END CONFIG //
